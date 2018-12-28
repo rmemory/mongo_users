@@ -10,27 +10,21 @@ describe('Deleting a user', () => {
 		.then(() => done());
 	});
 	
-	it('model instance remove', (done) => {
-		joe.deleteOne()
-		.then(() => User.findOne({ name: 'Joe' }))
+	it('find by id then delete', (done) => {
+		const id = joe._id;
+
+		User.findById(id)
+		.then((user) => User.deleteOne(user)
+		.then(() => User.findOne({_id: id}))
 		.then((user) => {
 			assert(user === null);
 			done();
-		  });
+		}));
 	});
 	
-	it('class method remove', (done) => {
+	it('deleteOne test', (done) => {
 		// Remove a bunch of records with some given criteria
-		User.remove({ name: 'Joe' })
-		.then(() => User.findOneAndDelete({ name: 'Joe' }))
-		.then((user) => {
-			assert(user === null);
-			done();
-		  });
-	});
-	
-	it('class method findOneAndRemove', (done) => {
-		User.findOneAndRemove({ name: 'Joe' })
+		User.findOneAndDelete({ name: 'Joe' })
 		.then(() => User.findOne({ name: 'Joe' }))
 		.then((user) => {
 			assert(user === null);
@@ -38,8 +32,8 @@ describe('Deleting a user', () => {
 		  });
 	});
 	
-	it('class method findByIdAndRemove', (done) => {
-		User.findByIdAndRemove(joe._id)
+	it('class method findOneAndDelete', (done) => {
+		User.findOneAndDelete({ name: 'Joe' })
 		.then(() => User.findOne({ name: 'Joe' }))
 		.then((user) => {
 			assert(user === null);
