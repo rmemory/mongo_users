@@ -3,7 +3,8 @@ const Schema = mongoose.Schema;
 
 // User schema
 const UserSchema = new Schema({
-	name: String
+	name: String,
+	postCount: Number,
 });
 
 // User represents the entire collection of Users

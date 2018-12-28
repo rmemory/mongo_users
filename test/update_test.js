@@ -59,12 +59,14 @@ it('A model class can find a record with an Id and update', (done) => {
 	});
 });
 
-//   it('A user can have their postcount incremented by 1', (done) => {
-//     User.update({ name: 'Joe' }, { $inc: { likes: 10 } })
-//       .then(() => User.findOne({ name: 'Joe' }))
-//       .then((user) => {
-//         assert(user.likes === 10);
-//         done();
-//       });
-//   });
+it('A user can have their postcount incremented by 10', (done) => {
+	User.findOneAndUpdate({ name: 'Joe' }, { $inc: { postCount: 10 } })
+	.then(() => {
+		  User.findOne({ name: 'Joe' })
+			.then((user) => {
+				assert(user.postCount === 10);
+				done();
+			});
+		});
+	});
 });

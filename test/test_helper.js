@@ -3,7 +3,10 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise; // Use ES6 promises
 
 before((done) => {
-	mongoose.connect('mongodb://localhost/users_test', { useNewUrlParser: true });
+	mongoose.connect('mongodb://localhost/users_test', { 
+		useNewUrlParser: true,
+		useFindAndModify: false,
+	 });
 	mongoose.connection
 		.once('open', () => {
 			console.log("Successfully connected to database; Initialization complete");
