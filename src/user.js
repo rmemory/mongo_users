@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const PostSchema = require('./post_schema');
 const Schema = mongoose.Schema;
 
 // User schema
@@ -11,7 +12,15 @@ const UserSchema = new Schema({
 		},
 		required: [true, 'Name is required.'],
 	},
-	postCount: Number,
+	//postCount: Number, // see virtual field below
+	posts: [PostSchema],
+	likes: Number,
+});
+
+// Not using an arrow function to not inherit "this"
+UserSchema.virtual('postCount').get(function() { // ES6 getter
+	// here "this" refers to a User instance
+	return this.posts.length; // not persisted
 });
 
 // User represents the entire collection of Users
