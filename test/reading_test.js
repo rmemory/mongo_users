@@ -32,13 +32,15 @@ describe('Reading users out of the database', () => {
 		});
 	});
 	
+	// good for pagination
 	it('can skip and limit the result set', (done) => {
 		User.find({})
-		.sort({ name: 1 })
-		.skip(1)
-		.limit(2)
+		.sort({ name: 1 }) // sort results alphabetically according to name, ascending. descending would be negative 1
+		.skip(1) // Skip the first user, in this case Alex
+		.limit(2) // Limit the number of results from query (only including joe and maria, not including Zach)
 		.then((users) => {
 			assert(users.length === 2);
+			//without the sort operation, this result isn't guaranteed
 			assert(users[0].name === 'Joe');
 			assert(users[1].name === 'Maria');
 			done();
